@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Meghan_CF_FinancialPortal.Models.Budget>
+
+<div class="page-header">
+    <h1 class="pull-xs-left"><span class="text-muted font-weight-light"><i class="page-header-icon ion-monitor"></i>Budgets / </span>Progress</h1>
+</div>
+
+<div class="col-md-8">
+    @foreach (var budget in Model)
+    {
+        <div class="panel">
+            <div class="panel-heading">
+                <span class="panel-title">@budget.Name</span>
+                <div class="panel-heading-controls" style="width: 30%; max-width: 140px;">
+                    <div class="progress progress-striped active" style="width: 100%">
+                        <div class="progress-bar progress-bar-danger" style="width: 60%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                @budget.Household.Name
+            </div>
+            <div class="panel-footer">
+                <a href="@Url.Action("Edit", "Budgets", new { id = budget.Id })" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
+                <a href="@Url.Action("Delete", "Budgets", new { id = budget.Id })" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i></a>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,21 @@
+﻿@model Meghan_CF_FinancialPortal.Models.Budget
+
+<div class="page-header">
+    <h1><span class="text-muted font-weight-light"><i class="page-header-icon ion-android-checkbox-outline"></i>Budgets / </span>Create</h1>
+</div>
+<div class="panel">
+    <div class="panel-heading">
+        <div class="panel-title">New Budget</div>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <fieldset class="form-group">
+            <label for="form-group-input-1">Name</label>
+            <input type="text" class="form-control" name="Name" placeholder="Name of budget...">
+        </fieldset>
+        <fieldset class="form-group text-right">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </fieldset>
+    }
+</div>

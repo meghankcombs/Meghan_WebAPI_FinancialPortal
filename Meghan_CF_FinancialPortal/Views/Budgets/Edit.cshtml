@@ -1,0 +1,26 @@
+﻿@model Meghan_CF_FinancialPortal.Models.Budget
+
+<div class="page-header">
+    <h1><span class="text-muted font-weight-light"><i class="page-header-icon ion-android-checkbox-outline"></i>Budgets / </span>Edit</h1>
+</div>
+<div class="panel">
+    <div class="panel-heading">
+        <div class="panel-title">Edit Budget</div>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
+        <fieldset class="form-group">
+            <label for="form-group-input-1">Name</label>
+            <input type="text" class="form-control" name="Name" vale="@Model.Name" placeholder="Name of budget...">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="form-group-input-2">Household</label>
+            @Html.DropDownList("HouseholdId", null, "--- None selected ---", htmlAttributes: new { @class = "form-control" })
+        </fieldset>
+        <fieldset class="form-group text-right">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </fieldset>
+    }
+</div>

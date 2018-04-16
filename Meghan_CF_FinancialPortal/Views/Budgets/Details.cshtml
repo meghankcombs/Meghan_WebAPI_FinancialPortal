@@ -1,0 +1,21 @@
+﻿@model Meghan_CF_FinancialPortal.Models.Budget
+
+<div>
+    <h4>@Model.Name Budget for @Model.Household.Name</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <!-- SHOW THIS DIFFERENTLY: ALSO BE ABLE TO ADD BUDGET ITEM HERE -->
+        <dt>
+            @Html.DisplayNameFor(model => model.BudgetItems)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BudgetItems)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
