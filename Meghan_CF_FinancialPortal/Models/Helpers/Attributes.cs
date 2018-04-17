@@ -14,7 +14,7 @@ namespace Meghan_CF_FinancialPortal.Models.Helpers
             var isAuthorized = base.AuthorizeCore(httpContext);
             if (!isAuthorized)
             {
-                return false;
+                return false; //takes them to login page
             }
             return httpContext.User.Identity.IsInHousehold(); //check if user is in a household
         }

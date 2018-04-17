@@ -92,21 +92,31 @@ namespace Meghan_CF_FinancialPortal.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ReturnUrl = Request.UrlReferrer;
             return View(household);
         }
 
         // POST: Households/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Household household)
+        public ActionResult Edit([Bind(Include = "Id,Name")] Household household, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(household).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                //check if name is unique
+                if (househldHelper.IsUnique(household.Name) == true)
+                {
+                    db.Entry(household).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Redirect(returnUrl);
+                }
+                else
+                {
+                    TempData["NameNotUnique"] = "The Household name you entered is not unique. Please enter a different name.";
+                    return View(household); //bring object that's being edited back up
+                } 
             }
-            return View(household);
+            return View(household); //if anything else is wrong...
         }
 
         //GET : Invite

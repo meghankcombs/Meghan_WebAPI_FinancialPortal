@@ -1,74 +1,60 @@
 ﻿@model Meghan_CF_FinancialPortal.Models.PersonalAccount
 
-@{
-    Layout = null;
-}
+<div class="page-header">
+    <h1>
+        <span class="text-muted font-weight-light">
+            <i class="page-header-icon ion-erlenmeyer-flask">
+            </i>Account: @Model.Name /
+        </span>Balance: @Model.Balance
+    </h1>
+</div>
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>PersonalAccount</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedBy.FirstName)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.CreatedBy.FirstName)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Household.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Household.Name)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Balance)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Balance)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.ReconciledBalance)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.ReconciledBalance)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.IsDeleted)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.IsDeleted)
-            </dd>
-    
-        </dl>
+<!-- Latest transactions -->
+<div class="panel">
+    <div class="panel-heading">
+        <div class="panel-title">Transactions</div>
+        <div class="panel-heading-controls">
+            <a href="@Url.Action("Create", "Transactions")" class="btn btn-xs btn-primary btn-outline btn-outline-colorless"><i class="fa fa-plus"></i> Transaction</a>
+        </div>
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table" id="transTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var trans in Model.Transactions)
+                    {
+                        <tr class="odd gradeX">
+                            <td>@trans.Date.ToString("MM/dd/yyy")</td>
+                            <td>@trans.Amount.ToString("C")</td>
+                            <td>@trans.Description</td>
+                            <td>@trans.Category.Name</td>
+                            <td class="text-center">
+                                <div class="btn-group" style="margin-top: 4px;">
+                                    <a href="@Url.Action("Edit", "Transactions", new { id = trans.Id })" class="btn btn-xs btn-primary btn-outline myIndexBtns" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
+                                    <a href="@Url.Action("Delete", "Transactions", new { id = trans.Id })" class="btn btn-xs btn-primary btn-outline myIndexBtns" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- / Latest transactions -->
+
+@section scripts
+{
+    <script>
+        $('#transTable').DataTable();
+    </script>
+}

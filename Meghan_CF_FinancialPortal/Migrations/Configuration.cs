@@ -1,5 +1,6 @@
 namespace Meghan_CF_FinancialPortal.Migrations
 {
+    using Meghan_CF_FinancialPortal.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -14,18 +15,20 @@ namespace Meghan_CF_FinancialPortal.Migrations
 
         protected override void Seed(Meghan_CF_FinancialPortal.Models.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            #region Categories
+            context.Categories.AddOrUpdate(
+                c => c.Name,
+                new Category { Id = 100, Name = "Auto" },
+                new Category { Id = 200, Name = "Bills & Utilities" },
+                new Category { Id = 300, Name = "Entertainment" },
+                new Category { Id = 400, Name = "Food & Dining" },
+                new Category { Id = 500, Name = "Home" },
+                new Category { Id = 600, Name = "Kids" },
+                new Category { Id = 700, Name = "Misc Expenses" },
+                new Category { Id = 800, Name = "Taxes" },
+                new Category { Id = 900, Name = "Travel" }
+                );
+            #endregion
         }
     }
 }

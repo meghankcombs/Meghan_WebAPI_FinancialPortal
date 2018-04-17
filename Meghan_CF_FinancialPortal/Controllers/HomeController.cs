@@ -18,7 +18,7 @@ namespace Meghan_CF_FinancialPortal.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        [AuthorizeHouseholdRequired] //goes to Attributes file and runs two methods to get householdId and 
+        [AuthorizeHouseholdRequired] //goes to Attributes file and runs two methods to see if user is authenticated and is in a household
         public ActionResult Index()
         {
             var id = User.Identity.GetHouseholdId(); //get the household id of user logged in
@@ -75,7 +75,8 @@ namespace Meghan_CF_FinancialPortal.Controllers
             return View(model);
         }
 
-        [Authorize]
+        //GET METHOD -- POST IS IN VIEW
+        [Authorize] 
         public ActionResult CreateJoinHousehold(Guid? code) //creating household that a person joined
         {
             //If the current user accessing this page already has a HouseholdId, send them to their dashboard

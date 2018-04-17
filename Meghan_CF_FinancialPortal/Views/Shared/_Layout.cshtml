@@ -51,34 +51,37 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="font-size-16"><span class="font-weight-light">Welcome, </span><strong>@UserHelper.UserFirstName()</strong></div>
-                }
-                <div class="font-size-16"><span class="font-weight-light">Welcome, </span><strong>Guest</strong></div>
-                <div class="btn-group" style="margin-top: 4px;">
+                    <div class="btn-group" style="margin-top: 4px;">
                     @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
                     {
                         @Html.AntiForgeryToken()
                         <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-xs btn-danger btn-outline" data-toggle="tooltip" title="Logout"><i class="fa fa-power-off"></i></a>
                     }
                 </div>
+                }
+                else
+                {
+                    <div class="font-size-16"><span class="font-weight-light">Welcome, </span><strong>Guest</strong></div>
+                }
             </li>
             <li class="px-nav-item">
                 <a href="@Url.Action("Index", "Home")"><i class="px-nav-icon fa fa-home"></i><span class="px-nav-label">Home</span></a>
             </li>
-            <li class="px-nav-item px-nav-dropdown">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="px-nav-item px-nav-dropdown">
                 <a href="#"><i class="px-nav-icon fa fa-user-circle"></i><span class="px-nav-label">Manage Profile</span></a>
-                <ul class="px-nav-dropdown-menu">
-                    <li class="px-nav-item"><a href="@Url.Action("ChangePassword", "Manage")"><i class="px-nav-icon fa fa-lock"></i><span class="px-nav-label">Change Password</span></a></li>
-                </ul>
-            </li>
-            @*<li class="px-nav-item px-nav-dropdown">
-                    <a href="#"><i class="px-nav-icon fa fa-balance-scale"></i><span class="px-nav-label">Household</span></a>
                     <ul class="px-nav-dropdown-menu">
-                        <li class="px-nav-item"><a href="@Url.Action()"><i class="px-nav-icon fa fa-info"></i><span class="px-nav-label">Details</span></a></li>
-                        <li class="px-nav-item"><a href="@Url.Action()"><i class="px-nav-icon fa fa-users"></i><span class="px-nav-label">Users</span></a></li>
-                        <li class="px-nav-item"><a href="@Url.Action()"><i class="px-nav-icon fa fa-area-chart"></i><span class="px-nav-label">Accounts</span></a></li>
-                        <li class="px-nav-item"><a href="@Url.Action()"><i class="px-nav-icon fa fa-dollar"></i><span class="px-nav-label">Budgets</span></a></li>
+                        <li class="px-nav-item"><a href="@Url.Action("ChangePassword", "Manage")"><i class="px-nav-icon fa fa-lock"></i><span class="px-nav-label">Change Password</span></a></li>
                     </ul>
-                </li>*@
+                </li>
+            }
+            <li class="px-nav-item">
+                <a href="@Url.Action("About", "Home")"><i class="px-nav-icon fa fa-info"></i><span class="px-nav-label">About</span></a>
+            </li>
+            <li class="px-nav-item">
+                <a href="@Url.Action("Contact", "Home")"><i class="px-nav-icon fa fa-envelope"></i><span class="px-nav-label">Contact</span></a>
+            </li>
         </ul>
     </nav>
     <!-- END SIDE NAV -->
