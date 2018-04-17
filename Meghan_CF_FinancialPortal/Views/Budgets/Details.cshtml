@@ -1,21 +1,27 @@
 ﻿@model Meghan_CF_FinancialPortal.Models.Budget
 
-<div>
-    <h4>@Model.Name Budget for @Model.Household.Name</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <!-- SHOW THIS DIFFERENTLY: ALSO BE ABLE TO ADD BUDGET ITEM HERE -->
-        <dt>
-            @Html.DisplayNameFor(model => model.BudgetItems)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BudgetItems)
-        </dd>
-
-    </dl>
+<div class="page-header">
+    <h1><span class="text-muted font-weight-light"><i class="page-header-icon ion-erlenmeyer-flask">
+          </i>Household: @Model.Household.Name / </span>Budget: @Model.Name</h1>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<div class="row">
+    <div class="col-md-8">
+        <!-- Budget Items -->
+        <div class="panel">
+            <div class="panel-heading">
+                <span class="panel-title"><a href="@Url.Action("Create", "BudgetItems")"><i class="fa fa-plus"></i> Budget Item</a></span>
+            </div>
+            @foreach(var item in Model.BudgetItems)
+            {
+            <div class="widget-support-tickets-item">
+                <div class="pull-xs-right font-size-13"><small class="font-size-13">$</small><strong>@item.Amount</strong></div>
+                <div class="widget-support-tickets-title">@item.Category.Name</div>
+                <span class="widget-support-tickets-info"><a href="@Url.Action("Edit", "BudgetItems", new { id = item.Id })"><i class="fa fa-edit"></i></a></span>
+                <span class="widget-support-tickets-info"><a href="@Url.Action("Delete", "BudgetItems", new { id = item.Id })"><i class="fa fa-trash"></i></a></span>
+            </div>
+            }
+        </div>
+        <!-- / Budget Items -->
+    </div>
+</div>

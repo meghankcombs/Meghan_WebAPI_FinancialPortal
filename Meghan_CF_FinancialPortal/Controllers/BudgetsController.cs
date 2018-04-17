@@ -40,26 +40,23 @@ namespace Meghan_CF_FinancialPortal.Controllers
         // GET: Budgets/Create
         public ActionResult Create()
         {
-            ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name");
+            ViewBag.ReturnUrl = Request.UrlReferrer;
             return View();
         }
 
         // POST: Budgets/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,HouseholdId")] Budget budget)
+        public ActionResult Create([Bind(Include = "Id,Name,HouseholdId")] Budget budget, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 budget.HouseholdId = HttpContext.User.Identity.GetHouseholdId().Value;
                 db.Budgets.Add(budget);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Redirect(returnUrl);
             }
-
-            ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name", budget.HouseholdId);
+            
             return View(budget);
         }
 
@@ -75,24 +72,21 @@ namespace Meghan_CF_FinancialPortal.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name", budget.HouseholdId);
+            ViewBag.ReturnUrl = Request.UrlReferrer;
             return View(budget);
         }
 
         // POST: Budgets/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,HouseholdId")] Budget budget)
+        public ActionResult Edit([Bind(Include = "Id,Name,HouseholdId")] Budget budget, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(budget).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Redirect(returnUrl);
             }
-            ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name", budget.HouseholdId);
             return View(budget);
         }
 

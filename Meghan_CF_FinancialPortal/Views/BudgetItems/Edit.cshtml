@@ -1,65 +1,28 @@
 ﻿@model Meghan_CF_FinancialPortal.Models.BudgetItem
 
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    
-    
+<div class="page-header">
+    <h1><span class="text-muted font-weight-light"><i class="page-header-icon ion-android-checkbox-outline"></i>Budget Item / </span>Edit</h1>
+</div>
+<div class="panel">
+    <div class="panel-heading">
+        <div class="panel-title"><a href="@Url.Action("Details","Budgets", new { id = Model.BudgetId })">Back to Budget</a></div>
+    </div>
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        
-        <div class="form-horizontal">
-            <h4>BudgetItem</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id)
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.CategoryId, "CategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.BudgetId, "BudgetId", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("BudgetId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.BudgetId, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
-            </div>
-        </div>
+        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.BudgetId)
+        <fieldset class="form-group">
+            <label for="form-group-input-1">Category</label>
+            @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="form-group-input-1">Amount</label>
+            <input type="number" class="form-control" name="Name" vale="@Model.Amount" placeholder="New amount">
+        </fieldset>
+        <fieldset class="form-group text-right">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </fieldset>
     }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-</body>
-</html>
+</div>

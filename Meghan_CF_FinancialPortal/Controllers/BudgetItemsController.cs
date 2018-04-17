@@ -39,27 +39,23 @@ namespace Meghan_CF_FinancialPortal.Controllers
         // GET: BudgetItems/Create
         public ActionResult Create()
         {
-            ViewBag.BudgetId = new SelectList(db.Budgets, "Id", "Name");
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
+            ViewBag.ReturnUrl = Request.UrlReferrer;
             return View();
         }
 
         // POST: BudgetItems/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CategoryId,BudgetId,Amount")] BudgetItem budgetItem)
+        public ActionResult Create([Bind(Include = "Id,CategoryId,BudgetId,Amount")] BudgetItem budgetItem, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 db.BudgetItems.Add(budgetItem);
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            ViewBag.BudgetId = new SelectList(db.Budgets, "Id", "Name", budgetItem.BudgetId);
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", budgetItem.CategoryId);
+                return Redirect(returnUrl);
+            }
+            
             return View(budgetItem);
         }
 
@@ -75,53 +71,48 @@ namespace Meghan_CF_FinancialPortal.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.BudgetId = new SelectList(db.Budgets, "Id", "Name", budgetItem.BudgetId);
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", budgetItem.CategoryId);
+            ViewBag.ReturnUrl = Request.UrlReferrer;
             return View(budgetItem);
         }
 
         // POST: BudgetItems/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CategoryId,BudgetId,Amount")] BudgetItem budgetItem)
+        public ActionResult Edit([Bind(Include = "Id,CategoryId,BudgetId,Amount")] BudgetItem budgetItem, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(budgetItem).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Redirect(returnUrl);
             }
-            ViewBag.BudgetId = new SelectList(db.Budgets, "Id", "Name", budgetItem.BudgetId);
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", budgetItem.CategoryId);
             return View(budgetItem);
         }
 
         // GET: BudgetItems/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            BudgetItem budgetItem = db.BudgetItems.Find(id);
-            if (budgetItem == null)
-            {
-                return HttpNotFound();
-            }
-            return View(budgetItem);
-        }
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    BudgetItem budgetItem = db.BudgetItems.Find(id);
+        //    if (budgetItem == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(budgetItem);
+        //}
 
         // POST: BudgetItems/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             BudgetItem budgetItem = db.BudgetItems.Find(id);
             db.BudgetItems.Remove(budgetItem);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            ViewBag.PreviousUrl = System.Web.HttpContext.Current.Request.UrlReferrer.ToString();
+            return Redirect(ViewBag.PreviousUrl);
         }
 
         protected override void Dispose(bool disposing)
